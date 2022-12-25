@@ -1,0 +1,48 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: traefik
+spec:
+  releaseName: traefik-public
+  chart:
+    spec:
+      chart: traefik
+      sourceRef:
+        kind: HelmRepository
+        name: traefik
+        namespace: flux-system
+      version: 10.24.1
+  interval: 1h0m0s
+  install:
+    remediation:
+      retries: 3
+  values:
+    ingressClass:
+      enabled: true
+      isDefaultClass: false
+
+    service:
+      spec:
+        loadBalancerIP: 10.99.0.254
+      annotations:
+        metallb.universe.tf/address-pool: "public"
+
+    ingressRoute:
+      dashboard:
+        enabled: false 
+
+    providers:
+      kubernetesCRD:
+        ingressClass: traefik-public
+
+      kubernetesIngress:
+        ingressClass: traefik-public
+
+    # ports:
+    #   web:
+    #     redirectTo: websecure
+      # ssh:
+      #   port: 8022
+      #   expose: true
+      #   exposedPort: 22
+      #   protocol: TCP
