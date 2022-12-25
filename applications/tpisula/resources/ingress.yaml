@@ -1,0 +1,26 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: resume-ingress
+  namespace: tpisula
+  annotations:
+    # traefik.ingress.kubernetes.io/router.tls: "true"
+    # ingress.kubernetes.io/ssl-redirect: "true"
+    # kubernetes.io/tls-acme: "true"
+spec:
+  ingressClassName: traefik-public
+  # tls:
+  # - hosts:
+  #   - accounting.c0.inflancka.labrats.work
+  #   secretName: accounting-secret
+  rules:
+  - host: resume.c0.inflancka.labrats.work
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: resume
+            port:
+              number: 80

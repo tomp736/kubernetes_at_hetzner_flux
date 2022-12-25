@@ -1,0 +1,13 @@
+# version.patch.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: resume
+  namespace: tpisula
+spec:
+  template:
+    spec:
+      containers:
+        - name: resume
+          image: gitlab.labrats.work:5050/labrats/software/work.labrats.resume/resume:1.0.23
+          imagePullPolicy: Always
