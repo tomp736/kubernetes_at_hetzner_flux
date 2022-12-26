@@ -14,7 +14,7 @@ spec:
   #   - accounting.c0.inflancka.labrats.work
   #   secretName: accounting-secret
   rules:
-  - host: resume.c0.inflancka.labrats.work
+  - host: tpisula.labrats.work
     http:
       paths:
       - path: /
