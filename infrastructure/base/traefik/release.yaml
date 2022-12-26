@@ -11,7 +11,7 @@ spec:
         kind: HelmRepository
         name: traefik
         namespace: flux-system
-      version: 10.24.1
+      version: 20.8.0
   interval: 1h0m0s
   install:
     remediation:
@@ -21,28 +21,13 @@ spec:
       enabled: true
       isDefaultClass: false
 
-    service:
-      spec:
-        loadBalancerIP: 10.99.0.254
-      annotations:
-        metallb.universe.tf/address-pool: "public"
-
     ingressRoute:
       dashboard:
         enabled: false 
 
-    providers:
-      kubernetesCRD:
-        ingressClass: traefik-public
+    ports:
+      web:
+        nodePort: 32080
 
-      kubernetesIngress:
-        ingressClass: traefik-public
-
-    # ports:
-    #   web:
-    #     redirectTo: websecure
-      # ssh:
-      #   port: 8022
-      #   expose: true
-      #   exposedPort: 22
-      #   protocol: TCP
+      websecure:
+        nodePort: 32443
